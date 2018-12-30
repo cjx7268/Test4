@@ -186,7 +186,49 @@ export default {
           console.log("ERRPR message:"+error);
         })
     },
-
+    axiosGetprofile(){
+      this.$axios.get(global_.Url +'users/profile',{
+        params:{
+          UID:"1"
+        }
+      })
+        .then((response)=>{
+          console.log("response profile data:\n");
+          console.log(response.data);
+        })
+        .catch((error)=>{
+          console.log("ERRPR message:"+error);
+        })
+    },
+    axiosEditprofile(){
+      this.$axios.get(global_.Url +'users/update_profile',{
+        params:{
+          UID:"1"
+        }
+      })
+        .then((response)=>{
+          console.log("response profile data:\n");
+          console.log(response.data);
+        })
+        .catch((error)=>{
+          console.log("ERRPR message:"+error);
+        })
+    },
+    axiosEditprofile(){
+      this.$axios.get(global_.Url +'users/changePassword',{
+        params:{
+          UID:"1",
+          user_password:""
+        }
+      })
+        .then((response)=>{
+          console.log("response profile data:\n");
+          console.log(response.data);
+        })
+        .catch((error)=>{
+          console.log("ERRPR message:"+error);
+        })
+    },
     axiosLogin(){
       this.$axios.get(global_.Url +'users/login' ,{
         params:{

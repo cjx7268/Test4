@@ -30,7 +30,8 @@
 </template>
 
 <script>
-export default {
+  import global_ from '@/Global.vue'
+  export default {
   name: 'EditPassword',
   data() {
     return {
@@ -49,6 +50,19 @@ export default {
     updatePassword(e) {
       this.$nextTick(() => {
         if (e.target.canSubmit) {
+          this.$axios.get(global_.Url +'users/changePassword',{
+            params:{
+              UID:"1",
+              user_password:this.cpassword
+            }
+          })
+            .then((response)=>{
+              console.log("response profile data:\n");
+              console.log(response.data);
+            })
+            .catch((error)=>{
+              console.log("ERRPR message:"+error);
+            })
           this.$store.dispatch('updateUser', { password: this.cpassword })
           this.$message.show('修改成功')
         }
