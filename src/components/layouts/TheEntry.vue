@@ -18,7 +18,7 @@
         <a v-dropdown href="javascript:;">
           <span v-if="user">
             <img v-if="user.avatar" :src="user.avatar" class="avatar-topnav">
-            <span v-if="user.name">{{ user.name }}</span>
+            <span v-if="user.name">{{ user.nickname }}</span>
           </span>
           <span v-else>佚名</span>
           <span class="caret"></span>

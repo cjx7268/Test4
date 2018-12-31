@@ -69,7 +69,9 @@
               this.$store.dispatch('login')
             }
             console.log("response login data:\n");
-            var data2= response.data;
+            let data2= response.data;
+            // user.uid=data2.UID;
+            // this.$store.commit('UPDATE_USER',user)
             console.log( data2 );
           })
           .catch((error)=>{

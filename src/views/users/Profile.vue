@@ -111,9 +111,10 @@
     }
   },
   created() {
+    console.log(this.$store.state.user)
     this.$axios.get(global_.Url +'users/profile',{
       params:{
-        UID:"1"
+        UID:this.$store.state.user.uid
       }
     })
       .then((response)=>{

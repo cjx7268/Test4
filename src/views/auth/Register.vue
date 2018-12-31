@@ -88,7 +88,8 @@ export default {
           name: this.username,
           nickname:this.nickname,
           password: this.password,
-          avatar: `https://api.adorable.io/avatars/200/${this.username}.png`
+          avatar: `https://api.adorable.io/avatars/200/${this.username}.png`,
+           uid:''
         }
         this.$axios.get(global_.Url +'users/register',{
           params:{
@@ -104,13 +105,16 @@ export default {
               this.showMsg('用户名已存在')
               console.log('111'+this)
             }else{
-              user.uid = response.data.UID
+              console.log(response.data.UID)
+              this.$set(user,"uid",response.data.UID)
+              console.log(user)
+              this.login(user)
             }
           })
           .catch((error)=>{
             console.log("ERRPR message:"+error);
           })
-        this.login(user)
+
         // const localUser = this.$store.state.user
 
         // if (localUser) {
