@@ -168,6 +168,7 @@ export default {
     // this.axiosfollowPost();
   },
   methods:{
+
     //  axios是promise构造的函数吗？？？？？
 
     axiosRegister(){
@@ -219,6 +220,20 @@ export default {
         params:{
           UID:"1",
           user_password:""
+        }
+      })
+        .then((response)=>{
+          console.log("response profile data:\n");
+          console.log(response.data);
+        })
+        .catch((error)=>{
+          console.log("ERRPR message:"+error);
+        })
+    },
+    axiosMyPost(){
+      this.$axios.get(global_.Url +'users/myPosts',{
+        params:{
+          UID:this.$store.state.user.uid
         }
       })
         .then((response)=>{

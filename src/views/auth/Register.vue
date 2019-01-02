@@ -14,7 +14,7 @@
           </div>
           <div class="form-group">
             <label class="control-label">昵称</label>
-            <input v-model.trim="nickname" v-validator:input.required="{ regex: /^[\u4e00-\u9fa5]{4,8}$/, error: '昵称要求不少于4个字，不多于8个字' }" type="text" class="form-control" placeholder="请填写用户名">
+            <input v-model.trim="nickname" v-validator:input.required="{ regex: /^[\u4e00-\u9fa5]{2,8}$/, error: '昵称要求不少于2个字，不多于8个字' }" type="text" class="form-control" placeholder="请填写用户名">
           </div>
           <div class="form-group">
             <label class="control-label">密码</label>

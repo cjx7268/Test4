@@ -8,7 +8,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">昵称</label>
             <div class="col-sm-6">
-              <input v-model.trim="nickname" v-validator:input.required="{ title: '昵称', regex: /^[\u4e00-\u9fa5]{2,8}$/, error: '' }" type="text" class="form-control">
+              <input v-model.trim="nickname" v-validator:input.required="{ title: '昵称', regex: /^[\u4e00-\u9fa5]{2,8}$/, error: '昵称要求不少于2个字，不多于8个字' }" type="text" class="form-control">
             </div>
           </div>
           <div class="form-group">
@@ -174,7 +174,7 @@
           console.log(this.nickname)
           this.$axios.get(global_.Url +'users/update_profile',{
             params:{
-              UID:"1",
+              UID:this.$store.state.user.uid,
               user_name:this.nickname,
               user_age:this.userage,
               user_sex:this.sex,

@@ -103,11 +103,11 @@ export default {
 
       this.$axios.get(global_.Url + 'posts/addPost',{
         params:{
-          UID: "1",
+          UID: this.$store.state.user.uid,
           post_module:"人文艺术",
-          post_theme:"我测试一个帖子",
+          post_theme:this.title,
           //post_time: new Date().toLocaleString(),
-          floor_content:"这是全都是瞎写的帖子内容，不靠谱",
+          floor_content:this.content,
           ////最后更新时间与上面相同
         }
       })

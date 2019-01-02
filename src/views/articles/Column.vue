@@ -18,9 +18,13 @@
               </h4>
             </div>
             <hr>
-            <router-link :to="`/${userName}`">
-              <li class="list-group-item"><i class="text-md fa fa-list-ul"></i> 专栏文章（{{ articleNum }}）</li>
-            </router-link>
+            <!--<router-link :to="`/${userName}`">-->
+              <!--<li class="list-group-item"><i class="text-md fa fa-list-ul"></i> 专栏文章（{{ articleNum }}）</li>-->
+            <!--</router-link>-->
+            <h4>
+              <div>年龄：{{user.userage}}</div>
+
+            </h4>
           </div>
         </div>
       </div>
@@ -30,14 +34,18 @@
 
 <script>
 import { mapState } from 'vuex'
+import global_ from '@/Global.vue'
 
 export default {
   name: 'Column',
   data() {
     return {
+      user:'',
       userName: '', //  对应用户姓名
+      userNickname:'',
       userAvatar: '', //  对应用户头像
-      articles: [] //  对应用户文章
+      articles: [], //  对应用户文章
+      isUser: true
     }
   },
   computed: {
@@ -62,6 +70,29 @@ export default {
   },
   methods: {
     setDataByParams(params) {
+      // this.$axios.get(global_.Url +'users/myPosts',{
+      //   params:{
+      //     UID:this.$store.state.user.uid
+      //   }
+      // })
+      //   .then((response)=>{
+      //     console.log("response profile data:\n");
+      //     console.log(response.data);
+      //     console.log(this.$store.state)
+      //     var tem = response.data.result;
+      //     var temp = [];
+      //     for (let i = 0; i < tem.length; i++){
+      //       temp.push({
+      //         articleId: tem[i].post_id,
+      //         title: tem[i].post_theme,
+      //         time: tem[i].post_time
+      //       })
+      //     }
+      //     this.articles = temp
+      //   })
+      //   .catch((error)=>{
+      //     console.log("ERRPR message:"+error);
+      //   })
       const user = params.user
       const articleId = params.articleId
       // 当前文章
@@ -69,12 +100,14 @@ export default {
 
       // 存在当前文章时，设置用户数据为当前文章的用户信息，并使用文章的 uname 获取对应用户文章
       if (article) {
-        this.userName = article.uname
-        this.userAvatar = article.uavatar
-        this.articles = this.$store.getters.getArticlesByUid(null, article.uname)
+        this.userName = article.name
+        this.userNickname = article.nickname
+        this.userAvatar = article.avatar
+        this.articles = this.$store.getters.getArticlesByUid(article.uid, article.uname)
       } else if (user) {
         // 存在 user 参数时，使用路由的 user 获取对应用户文章
-        const articles = this.$store.getters.getArticlesByUid(null, user)
+        const articles = this.$store.getters.getArticlesByUid(user.uid, user)
+        this.user= this.$store.state.user
 
         // 存在至少一篇用户文章时，设置用户数据为第一篇文章的用户信息
         if (articles.length) {
@@ -88,6 +121,63 @@ export default {
 
         this.articles = articles
       }
+      // if (this.isUser){
+      //   this.userNickname = this.$store.state.user.nickname
+      //   this.userAvatar = this.$store.state.user.avatar
+      //   this.$axios.get(global_.Url +'users/myPosts',{
+      //     params:{
+      //       UID:this.$store.state.user.uid
+      //     }
+      //   })
+      //     .then((response)=>{
+      //       console.log("response profile data:\n");
+      //       console.log(response.data);
+      //       console.log(this.$store.state)
+      //       var tem = response.data.result;
+      //       var temp = [];
+      //       for (let i = 0; i < tem.length; i++){
+      //         temp.push({
+      //           articleId: tem[i].post_id,
+      //           title: tem[i].post_theme,
+      //           time: tem[i].post_time,
+      //           uavatar: this.$store.state.user.avatar
+      //         })
+      //       }
+      //       this.articles = temp
+      //     })
+      //     .catch((error)=>{
+      //       console.log("ERRPR message:"+error);
+      //     })
+      // }else{
+      //   this.userName = params.user.name
+      //   this.userAvatar = params.user.avatar
+      //   this.userNickname = params.user.nickname
+      //   this.$axios.get(global_.Url +'users/myPosts',{
+      //   params:{
+      //     UID:params.user.uid
+      //   }
+      // })
+      //   .then((response)=>{
+      //     console.log("response profile data:\n");
+      //     console.log(response.data);
+      //     console.log(this.$store.state)
+      //     var tem = response.data.result;
+      //     var temp = [];
+      //     for (let i = 0; i < tem.length; i++){
+      //       temp.push({
+      //         articleId: tem[i].post_id,
+      //         title: tem[i].post_theme,
+      //         time: tem[i].post_time,
+      //         uavatar: params.user.avatar
+      //       })
+      //     }
+      //     this.articles = temp
+      //   })
+      //   .catch((error)=>{
+      //     console.log("ERRPR message:"+error);
+      //   })
+      //
+      // }
     }
   }
 }

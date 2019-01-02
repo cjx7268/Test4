@@ -29,12 +29,14 @@
 
 <script>
 import { mapState } from 'vuex'
+import global_ from '@/Global.vue'
 
 export default {
   name: 'List',
   data() {
     return {
-      articles: [] // 对应用户文章
+      articles: [], // 对应用户文章
+      isUser:true //判断是否为用户本人
     }
   },
   computed: {
@@ -46,8 +48,62 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       // 确认渲染该组件的对应路由时，获取对应用户文章
-      vm.articles = vm.$store.getters.getArticlesByUid(null, to.params.user)
+      // vm.articles = vm.$store.getters.getArticlesByUid(null, to.params.user)
+      vm.getUserPosts()
     })
+  },
+  methods:{
+    getUserPosts(){
+      if(this.isUser){
+      this.$axios.get(global_.Url +'users/myPosts',{
+        params:{
+          UID:this.$store.state.user.uid
+        }
+      })
+        .then((response)=>{
+          console.log("response profile data:\n");
+          console.log(response.data);
+          console.log(this.$store.state)
+          var tem = response.data.result;
+          var temp = [];
+          for (let i = 0; i < tem.length; i++){
+            temp.push({
+              articleId: tem[i].post_id,
+              title: tem[i].post_theme,
+              time: tem[i].post_time,
+              uavatar: this.$store.state.user.avatar
+            })
+          }
+          this.articles = temp
+        })
+        .catch((error)=>{
+          console.log("ERRPR message:"+error);
+        })}else{  this.$axios.get(global_.Url +'users/myPosts',{
+        params:{
+          UID:this.$store.state.user.uid
+        }
+      })
+        .then((response)=>{
+          console.log("response profile data:\n");
+          console.log(response.data);
+          console.log(this.$store.state)
+          var tem = response.data.result;
+          var temp = [];
+          for (let i = 0; i < tem.length; i++){
+            temp.push({
+              articleId: tem[i].post_id,
+              title: tem[i].post_theme,
+              time: tem[i].post_time,
+              uavatar: this.$store.state.user.avatar
+            })
+          }
+          this.articles = temp
+        })
+        .catch((error)=>{
+          console.log("ERRPR message:"+error);
+        })
+      }
+    }
   }
 }
 </script>
